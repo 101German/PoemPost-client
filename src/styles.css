@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+*{
+    margin: 0;
+    padding: 0;
+}
+li{
+    text-decoration: none;
+    list-style: none;
+}
+a{
+    color: #fff;
+    text-decoration: none;
+}
+body {
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
