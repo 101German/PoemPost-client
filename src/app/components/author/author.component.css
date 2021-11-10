@@ -1,0 +1,10 @@
+.text{
+    font-family: 'Zen Kaku Gothic Antique', sans-serif;
+}
+.author_name{
+   font-size: 35px;
+   font-weight: bold;
+}
+div.posts_table{
+    font-size:25px;
+}

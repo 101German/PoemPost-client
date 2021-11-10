@@ -1,0 +1,20 @@
+<div class="text-center mt-5">
+    <div class="heading">
+        <p class="author_name">{{post.authorName}}</p>
+        <p class="title">{{post.title}}</p>
+    </div>
+    <div class="content">
+        <p class="poem-text">
+            {{post.poemText}}
+        </p>
+        <time class="publish_date">{{post.creationDate.replace('T','
+            ').substring(0,post.creationDate.indexOf('.'))}}</time>
+
+        <div class="float-left">
+            <button class="btn_like btn-outline-primary" (click)="like(5,post.id)" > 
+                <span class="material-icons">favorite_border</span>
+            </button>
+            <p>{{post.likesCount}}</p>
+        </div>
+    </div>
+</div>
