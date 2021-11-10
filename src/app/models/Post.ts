@@ -1,5 +1,6 @@
 export class Post{
     constructor(
+    public id: number,    
     public title: string,
     public poemText: string,
     public likesCount: number,
