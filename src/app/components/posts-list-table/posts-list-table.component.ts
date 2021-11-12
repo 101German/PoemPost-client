@@ -5,48 +5,59 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { PostParameters } from 'src/app/models/PostsParameters';
+import { merge } from 'rxjs';
+import { map, startWith, switchMap } from "rxjs/operators";
+import { HttpResponse } from '@angular/common/http';
 
 
-
-@Component({  
+@Component({
   selector: 'app-posts-list-table',
   templateUrl: './posts-list-table.component.html',
-  providers:[PostService],
+  providers: [PostService],
   styleUrls: ['./posts-list-table.component.css']
 })
-export class PostsListTableComponent implements OnInit,AfterViewInit {
+export class PostsListTableComponent implements AfterViewInit {
   @Input() authorId: number = 0;
 
-  postParameters!:PostParameters;
-  serchText: string ="";
+  postParameters!: PostParameters;
+  serchText: string = "";
   dataSource = new MatTableDataSource<Post>();
   displayedColumns: string[] = ['title', 'author', 'creationDate', 'likesCount'];
   resultsLength = 0;
   isLoadingResults = true;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator; 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  constructor(public postService:PostService){ }
-  
+  constructor(private postService: PostService) { }
+
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.initTable();
   }
 
-  ngOnInit() {
-    this.postParameters = new PostParameters(this.authorId);
-    this.loadPosts(this.postParameters);  
-}
-
-loadPosts(postParameters:PostParameters) {
-    this.postService.getPosts(postParameters)
-        .subscribe((data: Post[]) => this.dataSource.data = data);
-}
-
- search(){
-this.postService.searchPosts(this.serchText)
-.subscribe((data:Post[])=>this.dataSource.data = data)
- }
+  search() {
+    this.postService.searchPosts(this.serchText)
+      .subscribe((data: Post[]) => this.dataSource.data = data);
+  }
+  initTable() {
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          this.postParameters = new PostParameters(this.authorId, this.paginator.pageIndex + 1, this.paginator.pageSize,this.sort.active,this.sort.direction)
+          return this.postService.getPosts(this.postParameters)
+        }),
+        map(data => {
+          this.isLoadingResults = false;
+          if (data === null) {
+            return [];
+          }
+          this.resultsLength = JSON.parse(data.headers.get("X-Pagination")!).TotalCount
+          return data.body!;
+        })
+      ).subscribe(data => this.dataSource.data = data)
+  }
 }
