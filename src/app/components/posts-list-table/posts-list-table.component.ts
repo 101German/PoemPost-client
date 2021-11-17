@@ -7,7 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { PostParameters } from 'src/app/models/PostsParameters';
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from "rxjs/operators";
-import { HttpResponse } from '@angular/common/http';
+
 
 
 @Component({
@@ -19,10 +19,9 @@ import { HttpResponse } from '@angular/common/http';
 export class PostsListTableComponent implements AfterViewInit {
   @Input() authorId: number = 0;
 
-  postParameters!: PostParameters;
   serchText: string = "";
   dataSource = new MatTableDataSource<Post>();
-  displayedColumns: string[] = ['title', 'author', 'creationDate', 'likesCount'];
+  displayedColumns: string[] = ['title', 'author', 'creationDate', 'likes'];
   resultsLength = 0;
   isLoadingResults = true;
 
@@ -47,8 +46,13 @@ export class PostsListTableComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          this.postParameters = new PostParameters(this.authorId, this.paginator.pageIndex + 1, this.paginator.pageSize,this.sort.active,this.sort.direction)
-          return this.postService.getPosts(this.postParameters)
+          return this.postService.getPosts(new PostParameters
+            (this.authorId, 
+              this.paginator.pageIndex + 1, 
+              this.paginator.pageSize,
+              this.sort.active,
+              this.sort.direction
+              ))
         }),
         map(data => {
           this.isLoadingResults = false;
