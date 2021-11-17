@@ -4,8 +4,12 @@
             {{author.name}}
         </p>
     </div>
-    <div class="posts_table float-left my-3">
-        <p>Posts published by {{author.name}}:</p>
+    <div class="container">
+        <p class="head_element float-left">Poems of {{author.name}}:</p>
+        <div class="float-right mb-2">
+            <button type="button" class="btn btn-outline-success">Subscribe</button>
+            <button type="button" class="btn btn-outline-danger">Unsubscribe</button>
+        </div>
     </div>
 </div>
 <app-posts-list-table [authorId]="authorId"></app-posts-list-table>

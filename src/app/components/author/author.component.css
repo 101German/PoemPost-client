@@ -5,6 +5,9 @@
    font-size: 35px;
    font-weight: bold;
 }
-div.posts_table{
+p.head_element{
     font-size:25px;
 }
+/* .subscribe_btn{
+    float: right;
+} */
