@@ -31,7 +31,7 @@ export class PostService {
   getPostById(id: number) {
     return this.http.get<Post>(this.url + "/" + id)
 }
-  searchPosts(searchText: string) {
-    return this.http.get<Post[]>(this.url + "?SearchTerm=" + searchText)
+  searchPosts(searchString: string) {
+    return this.http.get<Post[]>(this.url + "?SearchTerm=" + searchString)
   }
 }
