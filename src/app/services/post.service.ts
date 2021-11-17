@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http'
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http'
 import { Post } from '../models/Post';
 import { textChangeRangeIsUnchanged } from 'typescript';
 import { Observable } from 'rxjs';
@@ -15,17 +15,23 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
-  getPosts(postParameters:PostParameters) : Observable<Post[]>
+  getPosts(postParameters:PostParameters) : Observable<HttpResponse<Post[]>>
    {
-    const params = new HttpParams()
-        .set('authorId', postParameters.authorId.toString());
-    return this.http.get<Post[]>(this.url,{params});
+    let params = new HttpParams()
+        .set('authorId', postParameters.authorId.toString())
+        .set('pageNumber', postParameters.pageNumber.toString())
+        .set('pageSize',postParameters.pageSize.toString());
+        if(postParameters.sortField!=' ')
+        {
+         params = params.append('OrderString',postParameters.sortField + ' ' + postParameters.order)
+        }
+    return this. http.get<Post[]>(this.url,{ observe: 'response',params: params});
   }
 
   getPostById(id: number) {
     return this.http.get<Post>(this.url + "/" + id)
 }
-  searchPosts(searchText: string) {
-    return this.http.get<Post[]>(this.url + "?SearchTerm=" + searchText)
+  searchPosts(searchString: string) {
+    return this.http.get<Post[]>(this.url + "?SearchTerm=" + searchString)
   }
 }

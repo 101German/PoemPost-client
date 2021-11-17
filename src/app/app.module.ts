@@ -18,6 +18,9 @@ import { FormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { PostComponent } from './components/post/post.component';
 import { AuthorComponent } from './components/author/author.component';
+import { AuthorListTableComponent } from './components/author-list-table/author-list-table.component';
+import { ContemporariesListTableComponent } from './components/contemporaries-list-table/contemporaries-list-table.component';
+import { ClassicsListTableComponent } from './components/classics-list-table/classics-list-table.component';
 
 
 @NgModule({
@@ -26,7 +29,10 @@ import { AuthorComponent } from './components/author/author.component';
     PostsListTableComponent,
     TopBarComponent,
     PostComponent,
-    AuthorComponent
+    AuthorComponent,
+    AuthorListTableComponent,
+    ContemporariesListTableComponent,
+    ClassicsListTableComponent
   ],
   imports: [
     BrowserModule,
