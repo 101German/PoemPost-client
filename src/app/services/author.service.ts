@@ -8,7 +8,7 @@ import { AuthorParameters } from '../models/AuthorParameters';
   providedIn: 'root'
 })
 export class AuthorService {
-  private url = "https://localhost:5001/Author"
+  private url: string = "https://localhost:5001/Author"
 
   constructor(private http: HttpClient) { }
 

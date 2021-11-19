@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClassicsListTableComponent implements OnInit {
 
-  public AuthorType:number = 1;
+  public AuthorType:number = 2;
   constructor() { }
 
   ngOnInit(): void {

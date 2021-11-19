@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input,ViewChild } from '@angular/core';
 import { Post } from 'src/app/models/Post';
 import { PostService } from 'src/app/services/post.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { PostParameters } from 'src/app/models/PostsParameters';
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from "rxjs/operators";
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -16,8 +17,9 @@ import { map, startWith, switchMap } from "rxjs/operators";
   providers: [PostService],
   styleUrls: ['./posts-list-table.component.css']
 })
-export class PostsListTableComponent implements AfterViewInit {
+export class PostsListTableComponent implements AfterViewInit{
   @Input() authorId: number = 0;
+  @Input() categoryId: number = 0;
 
   serchText: string = "";
   dataSource = new MatTableDataSource<Post>();
@@ -29,7 +31,8 @@ export class PostsListTableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  constructor(private postService: PostService) { }
+  constructor(private route: ActivatedRoute,
+    private postService: PostService) { }
 
   ngAfterViewInit() {
     this.initTable();
@@ -47,7 +50,8 @@ export class PostsListTableComponent implements AfterViewInit {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.postService.getPosts(new PostParameters
-            (this.authorId, 
+             (this.authorId,
+              this.categoryId, 
               this.paginator.pageIndex + 1, 
               this.paginator.pageSize,
               this.sort.active,
