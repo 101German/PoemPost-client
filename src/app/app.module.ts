@@ -7,6 +7,7 @@ import {MatSliderModule} from '@angular/material/slider'
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import { AppComponent } from './components/app/app.component';
 import { PostsListTableComponent } from './components/posts-list-table/posts-list-table.component';
@@ -21,6 +22,8 @@ import { AuthorComponent } from './components/author/author.component';
 import { AuthorListTableComponent } from './components/author-list-table/author-list-table.component';
 import { ContemporariesListTableComponent } from './components/contemporaries-list-table/contemporaries-list-table.component';
 import { ClassicsListTableComponent } from './components/classics-list-table/classics-list-table.component';
+import { CategoriesGridListComponent } from './components/categories-grid-list/categories-grid-list.component';
+import { CategoryComponent } from './components/category/category.component';
 
 
 @NgModule({
@@ -32,7 +35,9 @@ import { ClassicsListTableComponent } from './components/classics-list-table/cla
     AuthorComponent,
     AuthorListTableComponent,
     ContemporariesListTableComponent,
-    ClassicsListTableComponent
+    ClassicsListTableComponent,
+    CategoriesGridListComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +48,7 @@ import { ClassicsListTableComponent } from './components/classics-list-table/cla
     MatSliderModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatGridListModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
