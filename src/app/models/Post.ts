@@ -7,5 +7,6 @@ export class Post{
     public creationDate: string,
     public authorName: string,
     public authorId: number,
+    public categoryId: number
     ){}
 }
