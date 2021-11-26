@@ -12,10 +12,8 @@
           <a class="nav-link text-white" href="/categories">Categories</a>
         </li>
       </ul>
-      <div class="search-box">
-        <input type="text" class="search-txt" placeholder="search...">
-        <a href="#" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></a>
-     </div>
-     <button type="button" class="btn btn-light text-white">Sign in</button>
+     <button type="button" class="btn btn-light text-white" (click)= "login()" *ngIf="!isAuthenticated()">Log in</button>
+     <button type="button" class="btn btn-light text-white" (click)= "logOut()" *ngIf="isAuthenticated()">Log out</button>
+     <button type="button" class="btn btn-light text-white ml-2" [routerLink]="['/profile']"  *ngIf="isAuthenticated()">Profile</button>
     </div>
   </nav>
