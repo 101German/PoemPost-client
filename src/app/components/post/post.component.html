@@ -11,7 +11,7 @@
             ').substring(0,post.creationDate.indexOf('.'))}}</time>
 
         <div class="float-left">
-            <button class="btn_like btn-outline-primary" (click)="like(5,post.id)" > 
+            <button class="btn_like btn-outline-primary" (click)="like(post.id)" > 
                 <span class="material-icons">favorite_border</span>
             </button>
             <p>{{post.likesCount}}</p>
