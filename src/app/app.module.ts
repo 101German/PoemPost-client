@@ -14,8 +14,8 @@ import { PostsListTableComponent } from './components/posts-list-table/posts-lis
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { PostComponent } from './components/post/post.component';
 import { AuthorComponent } from './components/author/author.component';
@@ -24,7 +24,19 @@ import { ContemporariesListTableComponent } from './components/contemporaries-li
 import { ClassicsListTableComponent } from './components/classics-list-table/classics-list-table.component';
 import { CategoriesGridListComponent } from './components/categories-grid-list/categories-grid-list.component';
 import { CategoryComponent } from './components/category/category.component';
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { ProfileComponent } from './components/profile/profile.component';
+import { JwtModule } from "@auth0/angular-jwt";
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { EditPostComponent } from './components/edit-post/edit-post.component';
+import { MatSelectModule } from '@angular/material/select';
+import { PostFormComponent } from './components/post-form/post-form.component';
+import { AddPostComponent } from './components/add-post/add-post.component';
+import { SubscriptionsListTableComponent } from './components/subscriptions-list-table/subscriptions-list-table.component';
 
+export function tokenGetter() {
+  return sessionStorage.getItem("access_token");
+}
 
 @NgModule({
   declarations: [
@@ -37,7 +49,12 @@ import { CategoryComponent } from './components/category/category.component';
     ContemporariesListTableComponent,
     ClassicsListTableComponent,
     CategoriesGridListComponent,
-    CategoryComponent
+    CategoryComponent,
+    ProfileComponent,
+    EditPostComponent,
+    PostFormComponent,
+    AddPostComponent,
+    SubscriptionsListTableComponent
   ],
   imports: [
     BrowserModule,
@@ -49,13 +66,27 @@ import { CategoryComponent } from './components/category/category.component';
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatGridListModule,
+    MatSelectModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    OAuthModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+      },
+    }),
     FormsModule,
+    ReactiveFormsModule,
     NgbModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: TokenInterceptor
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
