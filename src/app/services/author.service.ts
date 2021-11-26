@@ -34,4 +34,7 @@ export class AuthorService {
   public searchAuthors(searchString:string){
     return this.http.get<Author[]>(this.url + "?SearchTerm=" + searchString)
   }
+  public  getAuthorIdByUserId(userId:string){
+    return this.http.get<number>(`${this.url}/Users/${userId}`);
+  }
 }

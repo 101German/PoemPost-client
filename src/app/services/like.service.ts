@@ -11,8 +11,10 @@ export class LikeService {
 
   constructor(private http:HttpClient) { }
 
-  addLike(userId:number,postId:number):Observable<boolean>{
-    const body = {authorId:userId,postId:postId}
+  addLike(postId:number):Observable<boolean>{
+    const body = {
+      postId:postId
+    }
     return this.http.post<boolean>(this.url,body)
   }
 }

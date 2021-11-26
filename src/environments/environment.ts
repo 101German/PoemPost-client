@@ -2,10 +2,28 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
-  production: false
-};
+import { AuthConfig } from "angular-oauth2-oidc";
 
+export const authConfig: AuthConfig = {
+  issuer: "https://localhost:44310",
+  redirectUri: window.location.origin,
+  clientId: "PoemPostClient",
+  scope: 'PoemPost_api openid profile email roles',
+  postLogoutRedirectUri: window.location.origin,
+  requireHttps: false,
+  loginUrl: "https://localhost:44310/Account/Login"
+}
+export const environment = {
+  production:false,
+  urlApi: "https://localhost:5001",
+  authentication: authConfig,
+  name: "LOCAL",
+  issuer: "http://localhost:5000",
+  clientPortalApiConfig: {
+    host: "http://localhost:5001",
+    baseUrl: "api"
+  }
+}
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
