@@ -6,9 +6,9 @@
     </div>
     <div class="container">
         <p class="head_element float-left">Poems of {{author.name}}:</p>
-        <div class="float-right mb-2">
-            <button type="button" class="btn btn-outline-success">Subscribe</button>
-            <button type="button" class="btn btn-outline-danger">Unsubscribe</button>
+        <div class="float-right mb-2" >
+            <button type="button" class="btn btn-outline-success" *ngIf="!isSubscriptionExist" (click)="subscribe()">Subscribe</button>
+            <button type="button" class="btn btn-outline-danger" *ngIf="isSubscriptionExist" (click)="unsubscribe()">Unsubscribe</button>
         </div>
     </div>
 </div>
