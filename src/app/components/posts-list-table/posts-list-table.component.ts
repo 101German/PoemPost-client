@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input,ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input,OnInit,ViewChild } from '@angular/core';
 import { Post } from 'src/app/models/Post';
 import { PostService } from 'src/app/services/post.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,7 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { PostParameters } from 'src/app/models/PostsParameters';
 import { merge } from 'rxjs';
 import { map, startWith, switchMap } from "rxjs/operators";
-import { ActivatedRoute } from '@angular/router';
+import { ImportPostDataService } from 'src/app/services/import-post-data.service';
 
 
 
@@ -17,9 +17,10 @@ import { ActivatedRoute } from '@angular/router';
   providers: [PostService],
   styleUrls: ['./posts-list-table.component.css']
 })
-export class PostsListTableComponent implements AfterViewInit{
+export class PostsListTableComponent implements OnInit,AfterViewInit{
   @Input() authorId: number = 0;
   @Input() categoryId: number = 0;
+  @Input() profileMod: boolean = false;
 
   serchText: string = "";
   dataSource = new MatTableDataSource<Post>();
@@ -31,8 +32,14 @@ export class PostsListTableComponent implements AfterViewInit{
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  constructor(private route: ActivatedRoute,
-    private postService: PostService) { }
+  constructor(private readonly postService: PostService,
+    private readonly importPostDataService:ImportPostDataService) { }
+
+  ngOnInit(): void {
+   if(this.profileMod ==true){
+    this.displayedColumns = ['title', 'creationDate', 'likes','action'];
+   }
+  }
 
   ngAfterViewInit() {
     this.initTable();
@@ -67,5 +74,14 @@ export class PostsListTableComponent implements AfterViewInit{
           return data.body!;
         })
       ).subscribe(data => this.dataSource.data = data)
+  }
+  public setPostDataForEdit(post:Post): void{
+    this.importPostDataService.setPostDataForEdit(post);
+  }
+  public delete(id:number){
+    this.postService.deletePost(id).subscribe(()=>
+      this.ngAfterViewInit() 
+    );
+    
   }
 }
