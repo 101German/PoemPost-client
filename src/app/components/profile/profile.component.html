@@ -1,0 +1,6 @@
+<p class="text-center user_name mt-3">{{name}}</p>
+<button type="button" class="btn btn-primary" [routerLink]="['/addPost']">Add Post</button>
+<app-posts-list-table *ngIf="authorId && authorId!=0" [authorId]="authorId" [profileMod] = true></app-posts-list-table>
+<div *ngIf="authorId==0">You don't have posts</div>
+<div  class="mt-5">Your subscriptions:</div>
+<app-subscriptions-list-table [userId]="userId"></app-subscriptions-list-table>
